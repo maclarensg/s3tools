@@ -32,7 +32,8 @@ def main():
         buckets = ({ bucket["Name"]:None for bucket in response['Buckets'] }) 
         
         # Iterate the bucket keys
-        for bucket in buckets:
+        for bucket in list(buckets):
+            print(".", end='', flush=True)
             try:
                 # Get each buck name encryption
                 response = s3.get_bucket_encryption(
@@ -40,16 +41,23 @@ def main():
                 )
 
                 # When a encyption info is found save to dictionary 
-                if "ServerSideEncryptionConfiguration" in response:
-                    buckets[bucket] = response["ServerSideEncryptionConfiguration"]
+                if "ServerSideEncryptionConfiguration" in response and "Rules" in response["ServerSideEncryptionConfiguration"] and len(response["ServerSideEncryptionConfiguration"]["Rules"]) > 0:
+                    for rule in response["ServerSideEncryptionConfiguration"]["Rules"]:
+                       if "ApplyServerSideEncryptionByDefault" in rule and "SSEAlgorithm" in rule["ApplyServerSideEncryptionByDefault"]:
+                            if rule["ApplyServerSideEncryptionByDefault"]["SSEAlgorithm"] == "aws:kms":
+                                del buckets[bucket]
+                            else: 
+                                buckets[bucket] = response["ServerSideEncryptionConfiguration"]
 
-            except ClientError as e:
-                # We should really ignore this...
-                print('Bucket %s has no bucket encryption configured' % bucket)
+            except ClientError:
+                pass
+                # print('Bucket %s has no bucket encryption configured' % bucket) 
 
+        print("Done")
+        
         # Finally dump result to file
         with open(f'{args.save}', 'w') as file:
-            documents = yaml.dump(buckets, file)
+            yaml.dump(buckets, file)
 
     except Exception as e:
         logging.error(e)

@@ -8,8 +8,15 @@ do
     [[ $line =~ \"(.+)\" ]];
     if [[ ! -z  ${BASH_REMATCH[1]} ]]; then
         bucket=${BASH_REMATCH[1]}
-        echo $bucket
-        echo -ne "\t"
-        echo $(aws s3api get-bucket-encryption --bucket "${bucket}") 2>/dev/null
+        output=$(aws s3api get-bucket-encryption --bucket "${bucket}") 
+        if (( $? > 0 )); then
+            echo "${bucket}"
+        else 
+            if [ ! $(echo ${output} | grep -q "aws:kms") ]; then
+                echo -n "${bucket} "
+                printf "%s" ${output}
+                echo 
+            fi
+        fi
     fi
 done
