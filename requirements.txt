@@ -39,6 +39,6 @@ s3transfer==0.2.1
 six==1.12.0
 stevedore==1.30.1
 typing-extensions==3.7.4.2
-urllib3==1.24.1
+urllib3==1.24.2
 wrapt==1.12.1
 yarl==1.4.2
