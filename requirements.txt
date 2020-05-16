@@ -1,8 +1,13 @@
+aiobotocore==1.0.4
+aiohttp==3.6.2
+aioitertools==0.7.0
 appdirs==1.4.3
 asn1crypto==0.24.0
+async-timeout==3.0.1
+attrs==19.3.0
 boto==2.49.0
 boto3==1.9.253
-botocore==1.12.253
+botocore==1.15.32
 certifi==2020.4.5.1
 cffi==1.12.2
 chardet==3.0.4
@@ -17,6 +22,7 @@ jsonpatch==1.23
 jsonpointer==2.0
 kafka-python==2.0.1
 keystoneauth1==3.13.1
+multidict==4.7.6
 munch==2.3.2
 netifaces==0.10.9
 openstacksdk==0.26.0
@@ -32,4 +38,7 @@ ruamel.yaml.clib==0.2.0
 s3transfer==0.2.1
 six==1.12.0
 stevedore==1.30.1
+typing-extensions==3.7.4.2
 urllib3==1.24.1
+wrapt==1.12.1
+yarl==1.4.2

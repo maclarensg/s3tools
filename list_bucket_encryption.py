@@ -9,13 +9,16 @@ from botocore.exceptions import ClientError
 
 async def retrieveSecurityPolicy(s3, buckets, bucket):
     try:
+        
+        await asyncio.sleep(0.01)
+
         # Get each buck name encryption
         response = s3.get_bucket_encryption(
             Bucket=bucket
         )
 
         # Print indicator when a bucket has response
-        print("." , end="", flush=True)
+        print("%s\n" %  bucket, end="", flush=True)
 
         # When a encyption info is found save to dictionary 
         if "ServerSideEncryptionConfiguration" in response and "Rules" in response["ServerSideEncryptionConfiguration"] and len(response["ServerSideEncryptionConfiguration"]["Rules"]) > 0:
@@ -27,6 +30,8 @@ async def retrieveSecurityPolicy(s3, buckets, bucket):
                         buckets[bucket] = response["ServerSideEncryptionConfiguration"]
 
     except ClientError:
+        # Print indicator when a bucket has response
+        print("%s\n" % bucket , end="", flush=True)
         pass
         # print('Bucket %s has no bucket encryption configured' % bucket) 
 
