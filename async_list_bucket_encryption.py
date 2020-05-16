@@ -3,7 +3,6 @@ import asyncio
 import aiobotocore
 import sys, argparse
 import yaml
-import asyncio
 from botocore.exceptions import ClientError
 
 

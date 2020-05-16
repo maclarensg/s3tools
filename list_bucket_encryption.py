@@ -10,10 +10,9 @@ from botocore.exceptions import ClientError
 async def retrieveSecurityPolicy(s3, buckets, bucket):
     try:
         
-        await asyncio.sleep(0.01)
 
         # Get each buck name encryption
-        response = s3.get_bucket_encryption(
+        response = await s3.get_bucket_encryption(
             Bucket=bucket
         )
 
