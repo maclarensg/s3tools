@@ -1,5 +1,5 @@
 aiobotocore==1.0.4
-aiohttp==3.6.2
+aiohttp==3.7.4
 aioitertools==0.7.0
 appdirs==1.4.3
 asn1crypto==0.24.0
